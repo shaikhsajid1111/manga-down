@@ -4,13 +4,16 @@ import sys
 from chapter_list import chapter_list 
 
 class chapter_reader:
-    
+    def __init__(self, chapter_number = sys.argv[len(sys.argv)-2],anime = sys.argv[len(sys.argv)-1]):   #chapter_number and anime_name
+        self.anime = anime
+        self.chapter_number = chapter_number
     def scrap(self):
         """this method finds all pages and their links"""
-        chp_list = chapter_list("miki-san-sukidesu")
-        URLS = chp_list.scrap()
+        chp_list = chapter_list(self.anime)
 
-        response = requests.get(URLS[0])
+        URLS = chp_list.scrap()             #all chapters
+        
+        response = requests.get(URLS[int(self.chapter_number)])            #chapter number
         
         if response.status_code == 404:
             print("Error Occured!")
@@ -23,4 +26,5 @@ class chapter_reader:
             
             page_links = [f"https://mangareader.net{page_options[i]['value']}" for i in range(len(page_options))]
             return page_links
-        
+#usr = chapter_reader()
+#print(usr.scrap())

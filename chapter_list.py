@@ -3,9 +3,9 @@ from bs4 import BeautifulSoup
 import sys
 
 class chapter_list:
-    def __init__(self,anime):
-        
-        self.URL = f"http://www.mangareader.net/{anime}"
+    def __init__(self,anime = sys.argv[len(sys.argv)-1]):
+        self.anime = anime
+        self.URL = f"http://www.mangareader.net/{self.anime}"
     def scrap(self):
         """
         this method finds all chapters present for the manga
@@ -20,6 +20,6 @@ class chapter_list:
             anchors = table.find_all("a")
         
             links = [f"https://www.mangareader.net{a['href']}" for a in anchors]
-            return links
-
-         
+            return links   
+#usr = chapter_list()
+#print(usr.scrap())
