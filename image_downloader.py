@@ -7,11 +7,27 @@ import random
 import sys
 
 class downloader:
-    def download_chapter(self,chp_number,anime_name):
+    
+    '''downloader class downloads all images by sending response to the server, and writing them as 'wb' '''
+    def __url_generator(self,keywords):
+        '''private method to make anime names URL friendly'''
         
+        all_words = keywords.split(" ")
+        keyword = '-'.join(all_words)
+        
+        return keyword.lower()
+        
+    def download_chapter(self,chp_number,anime_name):
+        '''expected parameters are 
+        chapter number-> chapter number for manga(int),
+        anime_name -> manga name e.g naruto
+        '''
+        
+        anime_name = self.__url_generator(anime_name)
+        print(f"Searching for {anime_name}")
         img_fetch = image_fetcher(chp_number,anime_name)
         
-        img_links = img_fetch.scrap() #['https://i1.imggur.net/miki-san-sukidesu/1/miki-san-sukidesu-13610923.jpg', 'https://i9.imggur.net/miki-san-sukidesu/1/miki-san-sukidesu-13610929.jpg', 'https://i5.imggur.net/miki-san-sukidesu/1/miki-san-sukidesu-13610935.jpg', 'https://i3.imggur.net/miki-san-sukidesu/1/miki-san-sukidesu-13610941.jpg', 'https://i5.imggur.net/miki-san-sukidesu/1/miki-san-sukidesu-13610947.jpg', 'https://i3.imggur.net/miki-san-sukidesu/1/miki-san-sukidesu-13610953.jpg', 'https://i5.imggur.net/miki-san-sukidesu/1/miki-san-sukidesu-13610959.jpg', 'https://i8.imggur.net/miki-san-sukidesu/1/miki-san-sukidesu-13610965.jpg', 'https://i6.imggur.net/miki-san-sukidesu/1/miki-san-sukidesu-13610971.jpg', 'https://i10.imggur.net/miki-san-sukidesu/1/miki-san-sukidesu-13610977.jpg', 'https://i8.imggur.net/miki-san-sukidesu/1/miki-san-sukidesu-13610983.jpg', 'https://i2.imggur.net/miki-san-sukidesu/1/miki-san-sukidesu-13610989.jpg', 'https://i6.imggur.net/miki-san-sukidesu/1/miki-san-sukidesu-13610995.jpg', 'https://i8.imggur.net/miki-san-sukidesu/1/miki-san-sukidesu-13611001.jpg', 'https://i4.imggur.net/miki-san-sukidesu/1/miki-san-sukidesu-13611007.jpg', 'https://i8.imggur.net/miki-san-sukidesu/1/miki-san-sukidesu-13611013.jpg']
+        img_links = img_fetch.scrap() 
         time.sleep(random.randint(1,5))
         print(f"Succesfully fetched all images on the server...\nCreating Folder {anime_name}...")
         #folder creating process
@@ -54,7 +70,7 @@ class downloader:
         for i in range(len(img_links)):
             response = requests.get(img_links[i],stream = True)
             if response.status_code == 200:
-                with open(f'{anime_name} - Chapter: {chp_number} Page {i+1}.jpg','wb') as file:
+                with open(f'{anime_name} - Page {i+1}.jpg','wb') as file:
                     file.write(response.content)
                     print(f"{anime_name} - Chapter : {chp_number} Page :{i+1} downloaded...")
                 time.sleep(random.randint(5,10))
@@ -65,10 +81,16 @@ class downloader:
         
         
     def download_all(self,anime_name):
+        """expected parameters, anime_name -> anime's name"""
+        
+        anime_name = self.__url_generator(anime_name)
+        print(f"Searching for {anime_name}")
         chp_list = chapter_list(anime_name) #finding all chapters present for manga
         chp_count = chp_list.scrap()
         for i in range(len(chp_count)):  #iterating over all chapters 
             img_fetch = image_fetcher(i,anime_name)     
             self.download_chapter(i,anime_name)
-d = downloader()
-d.download_chapter(sys.argv[len(sys.argv)-2],sys.argv[len(sys.argv)-1])
+
+if __name__ == '__main__':
+    d = downloader()
+    d.download_chapter(sys.argv[len(sys.argv)-2],sys.argv[len(sys.argv)-1])

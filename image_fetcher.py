@@ -3,9 +3,10 @@ from bs4 import BeautifulSoup
 import sys
 from chapter_reader import chapter_reader
 import time
+import random
 '''
 - Finds the image on the page, provided by chapter reader class
-- returns a list of all images present in an chapter
+- returns a list of all image links present in an chapter
 '''
 class image_fetcher:
     def __init__(self,chapter_number = sys.argv[len(sys.argv)-2],anime = sys.argv[len(sys.argv)-1]):
@@ -28,8 +29,8 @@ class image_fetcher:
                 "id" : "img"
             })    
                 image_links.append(image['src'])
-                #print(image_links)
-                time.sleep(5)
+                
+                time.sleep(random.randint(1,5))
         return image_links        
 #usr = image_fetcher()
 #print(usr.scrap()) 
