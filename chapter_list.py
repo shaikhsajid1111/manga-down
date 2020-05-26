@@ -2,6 +2,11 @@ import requests
 from bs4 import BeautifulSoup
 import sys
 
+'''
+- Need to find all chapter's link present for manga.
+- Returns a list of all links of chapters e.g http://mangareader.com/chapter_number{int}
+
+'''
 class chapter_list:
     def __init__(self,anime = sys.argv[len(sys.argv)-1]):
         self.anime = anime
@@ -23,3 +28,5 @@ class chapter_list:
             return links   
 #usr = chapter_list()
 #print(usr.scrap())
+
+

@@ -2,7 +2,11 @@ import requests
 from bs4 import BeautifulSoup
 import sys
 from chapter_list import chapter_list 
+'''
+- Need to iterate over chapter's link provided by chapter_list class
+- Returns links of all pages present in the chapter e.g http://mangareader.net/chapter_number{int}/page_number{int}
 
+'''
 class chapter_reader:
     def __init__(self, chapter_number = sys.argv[len(sys.argv)-2],anime = sys.argv[len(sys.argv)-1]):   #chapter_number and anime_name
         self.anime = anime

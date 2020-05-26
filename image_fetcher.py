@@ -3,6 +3,10 @@ from bs4 import BeautifulSoup
 import sys
 from chapter_reader import chapter_reader
 import time
+'''
+- Finds the image on the page, provided by chapter reader class
+- returns a list of all images present in an chapter
+'''
 class image_fetcher:
     def __init__(self,chapter_number = sys.argv[len(sys.argv)-2],anime = sys.argv[len(sys.argv)-1]):
         self.chapter_number = chapter_number
