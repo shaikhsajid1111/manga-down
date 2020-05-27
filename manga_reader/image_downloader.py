@@ -5,7 +5,7 @@ import os
 import time
 import random
 import sys
-import proxies
+
 
 class downloader:
 
@@ -16,27 +16,26 @@ class downloader:
         
         all_words = keywords.split(" ")
         all_words = [all_words[i] for i in range(len(all_words)) if all_words[i] != '']
-        
+        print(all_words)
         keyword = '-'.join(all_words)
 
-        return keyword.lower()
+        return keyword.lwower()
+
 
     def download_chapter(self, chp_number, anime_name):
         '''expected parameters are 
         chapter number-> chapter number for manga(int),
         anime_name -> manga name e.g naruto
         '''
-        
         try:
             anime_name = self.__url_generator(anime_name)
-         
             print(f"Searching for {anime_name}")
-            
             img_fetch = image_fetcher(chp_number, anime_name)
 
             img_links = img_fetch.scrap()
             time.sleep(random.randint(1, 5))
-            print(f"Succesfully fetched all images on the server...\nCreating Folder {anime_name}...")
+            print(
+                f"Succesfully fetched all images on the server...\nCreating Folder {anime_name}...")
             # folder creating process
             # if folder exists
             if os.path.isdir(os.path.join(os.getcwd(), f'{anime_name}')):
@@ -52,8 +51,8 @@ class downloader:
                     os.mkdir(f'{chp_number}')
                 # change directory to chapter folder
                     os.chdir(os.path.join(os.getcwd(), f'{chp_number}'))
+
                 print("Starting download ...")
-                
             else:
                 # making folder with same anime name
                 os.mkdir(f'{anime_name}')
@@ -74,27 +73,24 @@ class downloader:
               #  write that response.content as binary as images'''
 
             print(f'{len(img_links)} Pages to download...')
-           
             for i in range(len(img_links)):
-                response = requests.get(img_links[i], stream=True,verify = False)
+                response = requests.get(img_links[i], stream=True)
                 if response.status_code == 200:
                     with open(f'{anime_name} - Page {i+1}.jpg', 'wb') as file:
                         file.write(response.content)
-                        print(f"{anime_name} - Chapter : {chp_number} Page :{i+1} downloaded...")
-                        print(f'Remaining {len(img_links) - (i+1)}...')
+                        print(
+                            f"{anime_name} - Chapter : {chp_number} Page :{i+1} downloaded...")
                     time.sleep(random.randint(5, 10))
                 else:
                     print(f"Could not able to download {i+1} page")
-            print(f"Successfully downloaded {anime_name} - {chp_number}\nEnjoy Reading the manga\nHave a great day! :)")
+            print(f"Successfully downloaded {anime_name} - {chp_number}")
 
         except IndexError:
             print(f"{chp_number} does not exist!")
-        except KeyboardInterrupt:
-            print("Have a great day! :)\nBye")
-            exit()
+
         except Exception as ex:
             print(ex)
-        
+
     def download_all(self, anime_name):
         """expected parameters, anime_name -> anime's name"""
         try:
@@ -110,6 +106,6 @@ class downloader:
         except Exception as ex:
             print(ex)
 
-
-d = downloader()
-d.download_chapter((sys.argv[len(sys.argv)-2]), sys.argv[len(sys.argv)-1])#int(
+if __name__ == '__main__':
+    d = downloader()
+    d.download_chapter(sys.argv[len(sys.argv)-2], sys.argv[len(sys.argv)-1])

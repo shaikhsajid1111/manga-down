@@ -12,6 +12,7 @@ class image_downloader:
         return keyword.capitalize()
 
     def download_chapter(self,chp_number,anime):
+        
         img_fetcher = image_fetch(chp_number,anime)
 
         img_links = img_fetcher.scrap()
@@ -54,10 +55,11 @@ class image_downloader:
                 with open(f'{anime} - Page {i+1}.jpg','wb') as file:
                     file.write(response.content)
                     print(f"{anime} - Chapter : {chp_number} Page :{i+1} downloaded...")
+                    print(f'Remaining {len(img_links)-(i+1)}')
                 time.sleep(random.randint(5,10))
             else:
                 print(f"Could not able to download {i+1} page")
-        print(f"Successfully downloaded {anime} - {chp_number}")
-
+        return f"Successfully downloaded {anime} - {chp_number}"
+        
 usr = image_downloader()
-print(usr.download_chapter(4,'naruto'))        
+print(usr.download_chapter(221,'naruto'))        

@@ -4,6 +4,8 @@ import sys
 from chapter_reader import chapter_reader
 import time
 import random
+
+
 '''
 - Finds the image on the page, provided by chapter reader class
 - returns a list of all image links present in an chapter
@@ -20,7 +22,7 @@ class image_fetcher:
             page_links = chp_reader.scrap()
 
             print("Chapter found! ...")
-
+            
             image_links = []
             for i in range(len(page_links)):
                 response = requests.get(page_links[i],verify = False)      #4 is page 5

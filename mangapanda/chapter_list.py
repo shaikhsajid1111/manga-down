@@ -6,7 +6,7 @@ import sys
 class chapter_list:
     '''
 - Need to find all chapter's link present for manga.
-- Returns a list of all links of chapters e.g http://mangareader.com/chapter_number{int}
+- Returns a list of all links of chapters 
 
 '''
     def __init__(self,anime = sys.argv[len(sys.argv)-1]):
@@ -16,7 +16,7 @@ class chapter_list:
         """
         this method finds all chapters present for the manga
         """
-        response = requests.get(self.URL)           #sending a request and storing the response inside response var
+        response = requests.get(self.URL,verify = False)           #sending a request and storing the response inside response var
         if response.status_code == 404:     #if page does not exist
             print("Manga not found! :(")
             exit()
