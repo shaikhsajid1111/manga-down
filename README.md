@@ -1,8 +1,8 @@
 # Manga Down
 
 [![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.python.org/)
-
-Manga down downloads all manga available from [kissmanga](http://kissmanga.com),[mangareader](http://mangareader.net)and [mangapanda](http://mangapanda.com)
+[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/Naereen/StrapDown.js/graphs/commit-activity)
+Manga down downloads all manga available from [kissmanga](http://kissmanga.com),[mangareader](http://mangareader.net) and [mangapanda](http://mangapanda.com)
 
 ## Features:
 - Download by chapter number and anime
@@ -26,8 +26,8 @@ Manga down downloads all manga available from [kissmanga](http://kissmanga.com),
 - [selenium](https://selenium-python.readthedocs.io/)
 - [chrome webdriver](https://chromedriver.chromium.org)
 
-# To do
+## To do
 
 - Status of progress in kissmanga
 
-**Project still in progress**
+**Project still in progress**:sweat_smile:
