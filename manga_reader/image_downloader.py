@@ -19,7 +19,7 @@ class downloader:
         print(all_words)
         keyword = '-'.join(all_words)
 
-        return keyword.lwower()
+        return keyword.lower()
 
 
     def download_chapter(self, chp_number, anime_name):
