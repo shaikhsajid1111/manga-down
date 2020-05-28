@@ -5,7 +5,8 @@ import os
 import time
 import random
 import sys
-
+import fake_useragent
+import urllib3
 
 class downloader:
 
@@ -16,7 +17,7 @@ class downloader:
         
         all_words = keywords.split(" ")
         all_words = [all_words[i] for i in range(len(all_words)) if all_words[i] != '']
-        print(all_words)
+       
         keyword = '-'.join(all_words)
 
         return keyword.lower()
@@ -71,15 +72,17 @@ class downloader:
             # '''
              # loops through all image links, send a response and if response is success,
               #  write that response.content as binary as images'''
-
+            headers = fake_useragent.get_user_agent()
+            urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)         #hiding the warning
             print(f'{len(img_links)} Pages to download...')
             for i in range(len(img_links)):
-                response = requests.get(img_links[i], stream=True)
+                response = requests.get(img_links[i], stream=True,headers = headers,verify = False)
                 if response.status_code == 200:
                     with open(f'{anime_name} - Page {i+1}.jpg', 'wb') as file:
                         file.write(response.content)
                         print(
                             f"{anime_name} - Chapter : {chp_number} Page :{i+1} downloaded...")
+                        print(f'Remaining {len(img_links)-i}')    
                     time.sleep(random.randint(5, 10))
                 else:
                     print(f"Could not able to download {i+1} page")
@@ -87,7 +90,9 @@ class downloader:
 
         except IndexError:
             print(f"{chp_number} does not exist!")
-
+        except KeyboardInterrupt:
+            print("Bye")
+            exit()
         except Exception as ex:
             print(ex)
 
@@ -108,4 +113,4 @@ class downloader:
 
 if __name__ == '__main__':
     d = downloader()
-    d.download_chapter(sys.argv[len(sys.argv)-2], sys.argv[len(sys.argv)-1])
+    d.download_chapter(int(sys.argv[len(sys.argv)-2]), sys.argv[len(sys.argv)-1])

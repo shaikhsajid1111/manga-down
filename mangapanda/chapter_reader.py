@@ -2,7 +2,8 @@ import requests
 from bs4 import BeautifulSoup
 import sys
 from chapter_list import chapter_list 
-
+import fake_useragent
+import urllib3
 class chapter_reader:
     '''
 - Need to iterate over chapter's link provided by chapter_list class
@@ -17,8 +18,11 @@ class chapter_reader:
         chp_list = chapter_list(self.anime)
 
         URLS = chp_list.scrap()             #all chapters
+
+        headers= fake_useragent.get_user_agent()
+        urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)         #hiding the warning
         
-        response = requests.get(URLS[int(self.chapter_number)-1],verify = False)            #chapter number
+        response = requests.get(URLS[int(self.chapter_number)-1],headers = headers,verify = False)            #chapter number
         
         if response.status_code == 404:
             print("Error Occured!")
@@ -31,3 +35,5 @@ class chapter_reader:
             
             page_links = [f"https://mangapanda.com{page_options[i]['value']}" for i in range(len(page_options))]
             return page_links
+#usr = chapter_reader(4,'naruto')
+#print(usr.scrap())

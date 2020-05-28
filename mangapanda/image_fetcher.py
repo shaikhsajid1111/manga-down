@@ -4,9 +4,10 @@ import sys
 from chapter_reader import chapter_reader
 import time
 import random
-
-
+import fake_useragent
+import urllib3
 '''
+
 - Finds the image on the page, provided by chapter reader class
 - returns a list of all image links present in an chapter
 '''
@@ -24,8 +25,14 @@ class image_fetcher:
             print("Chapter found! ...")
             
             image_links = []
+            print("Setting a new user agent...")
+            headers = fake_useragent.get_user_agent()
+            print("New user agent changed...")
+            
+            urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)  
+            
             for i in range(len(page_links)):
-                response = requests.get(page_links[i],verify = False)      #4 is page 5
+                response = requests.get(page_links[i],verify = False,headers = headers)      #4 is page 5
                 if response.status_code == 404:
                     print(f"Page not found! {page_links[i]}")
 
@@ -37,10 +44,10 @@ class image_fetcher:
             })        
                     image_links.append(image['src'])
 
-                    time.sleep(random.randint(1,8))
+                    time.sleep(random.randint(2,13))
             return image_links
         except requests.exceptions.ConnectionError:
             print("Connection refused!")            
                     
-#usr = image_fetcher()
+#usr = image_fetcher()#
 #print(usr.scrap()) 

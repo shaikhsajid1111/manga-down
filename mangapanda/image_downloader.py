@@ -5,7 +5,7 @@ import os
 import time
 import random
 import sys
-import proxies
+import fake_useragent
 
 class downloader:
 
@@ -72,17 +72,20 @@ class downloader:
             # '''
              # loops through all image links, send a response and if response is success,
               #  write that response.content as binary as images'''
-
+            print("Changing user agent...")
+            headers = fake_useragent.get_user_agent()
+            print("User Agent changed...")
             print(f'{len(img_links)} Pages to download...')
-           
+
+            
             for i in range(len(img_links)):
-                response = requests.get(img_links[i], stream=True,verify = False)
+                response = requests.get(img_links[i], stream=True,verify = False,headers = headers)
                 if response.status_code == 200:
                     with open(f'{anime_name} - Page {i+1}.jpg', 'wb') as file:
                         file.write(response.content)
                         print(f"{anime_name} - Chapter : {chp_number} Page :{i+1} downloaded...")
                         print(f'Remaining {len(img_links) - (i+1)}...')
-                    time.sleep(random.randint(5, 10))
+                    time.sleep(random.randint(6, 14))
                 else:
                     print(f"Could not able to download {i+1} page")
             print(f"Successfully downloaded {anime_name} - {chp_number}\nEnjoy Reading the manga\nHave a great day! :)")

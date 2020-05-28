@@ -72,6 +72,6 @@ class image_downloader:
         return f"Successfully downloaded {anime} - {chp_number}"
         
 usr = image_downloader()
-chapter_number = sys.argv[len(sys.argv)-2]
+chapter_number = int(sys.argv[len(sys.argv)-2])-1
 manga_name = sys.argv[len(sys.argv)-1]
 print(usr.download_chapter(chapter_number,manga_name))        

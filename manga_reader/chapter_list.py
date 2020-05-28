@@ -1,8 +1,8 @@
 import requests 
 from bs4 import BeautifulSoup
 import sys
-
-
+import fake_useragent
+import urllib3
 class chapter_list:
     '''
 - Need to find all chapter's link present for manga.
@@ -16,7 +16,12 @@ class chapter_list:
         """
         this method finds all chapters present for the manga
         """
-        response = requests.get(self.URL)           #sending a request and storing the response inside response var
+        headers = fake_useragent.get_user_agent()
+
+        urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)         #hiding the warning
+        
+        response = requests.get(self.URL,headers = headers,verify = False)           #sending a request and storing the response inside response var
+        
         if response.status_code == 404:     #if page does not exist
             print("Page not found!")
         if response.status_code == 200:
