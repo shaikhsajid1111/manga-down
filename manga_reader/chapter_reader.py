@@ -17,8 +17,10 @@ class chapter_reader:
         chp_list = chapter_list(self.anime)
 
         URLS = chp_list.scrap()             #all chapters
-        
+
+        print("Changing user agent...")      
         headers = fake_useragent.get_user_agent()        
+        print("User agent changed...")
         
         response = requests.get(URLS[int(self.chapter_number)],headers = headers,verify = False)            #chapter number
         

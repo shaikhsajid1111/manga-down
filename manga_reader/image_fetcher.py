@@ -21,7 +21,9 @@ class image_fetcher:
         image_links = []
 
         headers = fake_useragent.get_user_agent()
+
         urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)         #hiding the warning
+        
         for i in range(len(page_links)):
             response = requests.get(page_links[i],headers = headers,verify = False)      #4 is page 5
             if response.status_code == 404:

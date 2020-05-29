@@ -22,7 +22,7 @@ class image_fetch:
             chrome_options.add_argument('--disable-extensions')
             chrome_options.add_argument('--incognito')
             chrome_options.add_argument('--disable-gpu')
-
+            chrome_options.add_argumnet('--log-level=3')
             driver = webdriver.Chrome('C:\\webdrivers\\chromedriver.exe',options=chrome_options)
 
             driver.get(chapter_links[int(self.chapter_number)])            #pass the chapter number

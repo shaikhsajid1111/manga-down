@@ -1,5 +1,5 @@
 import requests
-from random import choice
+from random import choice,randint
 from bs4 import BeautifulSoup
 def get_proxy():
     url = "https://free-proxy-list.net/"
@@ -20,4 +20,3 @@ def get_proxy():
             'http' : f'http://{chosen_proxy}',
             'ftp': f'ftp://{chosen_proxy}'
     }
-

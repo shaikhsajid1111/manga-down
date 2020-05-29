@@ -6,14 +6,14 @@ import time
 import random
 import sys
 import fake_useragent
-
+import re
 class downloader:
 
     '''downloader class downloads all images by sending response to the server, and writing them as 'wb' '''
 
     def __url_generator(self, keywords):
         '''private method to make anime names URL friendly'''
-        
+        all_words = re.sub(r'[?|$|%|&|#]',r'-',keywords)
         all_words = keywords.split(" ")
         all_words = [all_words[i] for i in range(len(all_words)) if all_words[i] != '']
         
@@ -75,6 +75,7 @@ class downloader:
             print("Changing user agent...")
             headers = fake_useragent.get_user_agent()
             print("User Agent changed...")
+            
             print(f'{len(img_links)} Pages to download...')
 
             
@@ -114,5 +115,12 @@ class downloader:
             print(ex)
 
 
-d = downloader()
-d.download_chapter((sys.argv[len(sys.argv)-2]), sys.argv[len(sys.argv)-1])#int(
+if __name__ == '__main__':
+    usr = downloader()
+    if len(sys.argv) == 3:
+        #print("Downloading chapter")
+        usr.download_chapter(sys.argv[len(sys.argv)-2],sys.argv[len(sys.argv)-1])
+        
+    elif len(sys.argv) == 2:
+        #print("Downloading all chapter")
+        usr.download_all(sys.argv[len(sys.argv)-1])

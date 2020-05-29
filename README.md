@@ -23,7 +23,7 @@ Manga down downloads all mangas available from [kissmanga](http://kissmanga.com)
 - To download chapter of manga:
     - In terminal ```python image_downloader.py chapter_number anime_name```
 
-- To download all chapter of manga
+- To download all chapter of manga(only available for mangareader and mangapanda)
     - In terminal ```python image_downloader.py anime_name```
 
 - Kissmanga uses selenium webdriver. Install it from [here](https://chromedriver.chromium.org/downloads) **Chrome version and webdriver version must be compatible**
@@ -38,5 +38,6 @@ Manga down downloads all mangas available from [kissmanga](http://kissmanga.com)
 ## To do
 
 - Commands
+- Code Structure 
 
 **Project still in progress**:sweat_smile:

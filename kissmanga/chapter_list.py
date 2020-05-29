@@ -36,6 +36,7 @@ class chapter_list:
             chrome_options.add_argument('--disable-extensions')     #don't use any extenstions
             chrome_options.add_argument('--incognito')              #open link in incognito tab
             chrome_options.add_argument('--disable-gpu')    #disable graphics for chrome
+            chrome_options.add_argument('--log-level=3')
             #initializing webdriver
             driver = webdriver.Chrome('C:\\webdrivers\\chromedriver.exe',options=chrome_options)    #first parameter is webdriver's executive path, and chrome capabilities
 
@@ -63,5 +64,5 @@ class chapter_list:
             exit()
 
 
-#usr = chapter_list('naruto')
-#print(usr.scrap()) 
+usr = chapter_list('naruto')
+print(usr.scrap()) 

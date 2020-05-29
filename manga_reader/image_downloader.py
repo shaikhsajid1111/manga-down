@@ -7,6 +7,7 @@ import random
 import sys
 import fake_useragent
 import urllib3
+import re
 
 class downloader:
 
@@ -14,7 +15,7 @@ class downloader:
 
     def __url_generator(self, keywords):
         '''private method to make anime names URL friendly'''
-        
+        all_words = re.sub(r'[?|$|%|&|#]',r'-',keywords)
         all_words = keywords.split(" ")
         all_words = [all_words[i] for i in range(len(all_words)) if all_words[i] != '']
        
@@ -86,7 +87,7 @@ class downloader:
                     time.sleep(random.randint(5, 10))
                 else:
                     print(f"Could not able to download {i+1} page")
-            print(f"Successfully downloaded {anime_name} - {chp_number}")
+            print(f"Successfully downloaded {anime_name} - {chp_number}\nEnjoy the manga!:)\nBye")
 
         except IndexError:
             print(f"{chp_number} does not exist!")
@@ -112,5 +113,11 @@ class downloader:
             print(ex)
 
 if __name__ == '__main__':
-    d = downloader()
-    d.download_chapter(int(sys.argv[len(sys.argv)-2]), sys.argv[len(sys.argv)-1])
+    usr = downloader()
+    if len(sys.argv) == 3:
+        #print("Downloading chapter")
+        usr.download_chapter(sys.argv[len(sys.argv)-2],sys.argv[len(sys.argv)-1])
+        
+    elif len(sys.argv) == 2:
+        #print("Downloading all chapter")
+        usr.download_all(sys.argv[len(sys.argv)-1])
