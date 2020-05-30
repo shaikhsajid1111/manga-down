@@ -13,20 +13,22 @@ Manga down downloads all mangas available from [kissmanga](http://kissmanga.com)
 
 
 ## Features:
-- Download by chapter number and anime
+- Download by chapter number and manga
 - Download all chapter just by providing the manga name
 
 
 ## Installation
 - Install dependencies from [requirements](requirements.txt)
 
-- To download chapter of manga:
-    - In terminal ```python image_downloader.py chapter_number anime_name```
+- Go to any folder from manga_reader,magapanda or kissmanga
+    - To download chapter of manga:
+      - Open terminal in that folder and type ```python image_downloader.py chapter_number 'manga_name'```, Where ```chapter_number``` will be an integer, ```manga_name``` is string(pass under quotation).
 
-- To download all chapter of manga(only available for mangareader and mangapanda)
-    - In terminal ```python image_downloader.py anime_name```
+- To download all chapter of manga (only available for manga_reader and mangapanda)
+    - Go to either manga_reader or mangapanda folder and open terminal in same, type ```python image_downloader.py 'manga_name'```
 
-- Kissmanga uses selenium webdriver. Install it from [here](https://chromedriver.chromium.org/downloads) **Chrome version and webdriver version must be compatible**
+- Kissmanga uses selenium webdriver. Install it from [here](https://chromedriver.chromium.org/downloads) 
+**Note: Chrome version and webdriver version must be compatible**
 
 ## Tech
 
@@ -35,9 +37,8 @@ Manga down downloads all mangas available from [kissmanga](http://kissmanga.com)
 - [selenium](https://selenium-python.readthedocs.io/)
 - [chrome webdriver](https://chromedriver.chromium.org)
 
-## To do
 
-- Commands
-- Code Structure 
 
-**Project still in progress**:sweat_smile:
+## Screenshots
+
+![Demo](screenshots/mangapanda.gif)
