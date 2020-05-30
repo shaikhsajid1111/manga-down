@@ -75,7 +75,9 @@ class downloader:
               #  write that response.content as binary as images'''
             headers = fake_useragent.get_user_agent()
             urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)         #hiding the warning
+            
             print(f'{len(img_links)} Pages to download...')
+            
             for i in range(len(img_links)):
                 response = requests.get(img_links[i], stream=True,headers = headers,verify = False)
                 if response.status_code == 200:
@@ -86,6 +88,7 @@ class downloader:
                         print(f'Remaining {len(img_links)-i}')    
                     time.sleep(random.randint(5, 10))
                 else:
+            
                     print(f"Could not able to download {i+1} page")
             print(f"Successfully downloaded {anime_name} - {chp_number}\nEnjoy the manga!:)\nBye")
 

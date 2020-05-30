@@ -41,4 +41,4 @@ Manga down downloads all mangas available from [kissmanga](http://kissmanga.com)
 
 ## Screenshots
 
-![Demo](screenshots/mangapanda.gif)
+![Demo](screenshots/converttogif.gif)
