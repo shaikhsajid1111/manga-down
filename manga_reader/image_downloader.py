@@ -5,7 +5,7 @@ import os
 import time
 import random
 import sys
-import fake_useragent
+from fake_headers import Headers
 import urllib3
 import re
 
@@ -73,7 +73,7 @@ class downloader:
             # '''
              # loops through all image links, send a response and if response is success,
               #  write that response.content as binary as images'''
-            headers = fake_useragent.get_user_agent()
+            headers = Headers(headers=False).generate()
             urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)         #hiding the warning
             
             print(f'{len(img_links)} Pages to download...')

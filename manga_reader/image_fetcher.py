@@ -4,7 +4,7 @@ import sys
 from chapter_reader import chapter_reader
 import time
 import random
-import fake_useragent
+from fake_headers import Headers
 import urllib3
 '''
 - Finds the image on the page, provided by chapter reader class
@@ -20,7 +20,7 @@ class image_fetcher:
         page_links = chp_reader.scrap()
         image_links = []
 
-        headers = fake_useragent.get_user_agent()
+        headers = Headers(headers=False).generate()
 
         urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)         #hiding the warning
         
