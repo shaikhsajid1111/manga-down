@@ -7,7 +7,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import re
-import fake_useragent
+from fake_headers import Headers
 class chapter_list:
     
     def __init__(self,anime):
@@ -30,7 +30,7 @@ class chapter_list:
         try:
             #generating URL for manga givem
             URL = f'http://kissmanga.com/manga/{self.url_generator(self.anime)}'
-            headers = fake_useragent.get_user_agent()
+            headers = Headers(headers=False).generate()
             #setting chrome capabilities
             chrome_options = Options()          #options for chrome to run as e.g in incognito tab
 

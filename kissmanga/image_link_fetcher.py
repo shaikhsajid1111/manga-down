@@ -6,7 +6,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import sys
-import fake_useragent
+from fake_headers import Headers
 class image_fetch:
     def __init__(self,chapter_number = sys.argv[len(sys.argv)-2],anime = sys.argv[len(sys.argv)-1]):
         self.anime = anime
@@ -17,7 +17,7 @@ class image_fetch:
             print(f"Searching {self.anime}...")
             chapter_links = chp_list.scrap()
             #again changing user agent
-            headers = fake_useragent.get_user_agent()
+            headers = Headers(headers=False).generate()
             chrome_options = Options()
 
             chrome_options.add_argument('--headless')

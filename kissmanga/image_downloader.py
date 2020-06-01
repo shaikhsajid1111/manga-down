@@ -5,7 +5,7 @@ import requests
 import random
 import time
 import re
-import fake_useragent
+from fake_headers import Headers
 class image_downloader:
     def url_generator(self,anime_name):
         #anime_name.replace('?','-')
@@ -58,7 +58,7 @@ class image_downloader:
 
                 print(f'{len(img_links)} Pages to download...')
         #changing user agent
-            headers = fake_useragent.get_user_agent()
+            headers = Headers(headers=False).generate()
 
             for i in range(len(img_links)):     #iterating over all inage's link in the list
                 response = requests.get(img_links[i],stream = True,headers = headers)         #sending response to that link
