@@ -4,7 +4,7 @@ import sys
 from chapter_reader import chapter_reader
 import time
 import random
-import fake_useragent
+from fake_headers import Headers
 import urllib3
 '''
 
@@ -26,7 +26,7 @@ class image_fetcher:
             
             image_links = []
             print("Setting a new user agent...")
-            headers = fake_useragent.get_user_agent()
+            headers = Headers(headers=False).generate()
             print("New user agent changed...")
             
             urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)  

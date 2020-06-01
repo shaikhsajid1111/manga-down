@@ -1,7 +1,7 @@
 import requests 
 from bs4 import BeautifulSoup
 import sys
-
+from fake_headers import Headers
 
 class chapter_list:
     '''
@@ -16,7 +16,8 @@ class chapter_list:
         """
         this method finds all chapters present for the manga
         """
-        response = requests.get(self.URL,verify = False)           #sending a request and storing the response inside response var
+        headers = Headers(headers=False).generate()
+        response = requests.get(self.URL,verify = False,headers = headers)           #sending a request and storing the response inside response var
         if response.status_code == 404:     #if page does not exist
             print("Manga not found! :(")
             exit()

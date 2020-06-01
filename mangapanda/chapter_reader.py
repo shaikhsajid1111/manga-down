@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import sys
 from chapter_list import chapter_list 
-import fake_useragent
+from fake_headers import Headers
 import urllib3
 class chapter_reader:
     '''
@@ -19,7 +19,7 @@ class chapter_reader:
 
         URLS = chp_list.scrap()             #all chapters
 
-        headers= fake_useragent.get_user_agent()
+        headers= Headers(headers=False).generate()
         urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)         #hiding the warning
         
         response = requests.get(URLS[int(self.chapter_number)-1],headers = headers,verify = False)            #chapter number

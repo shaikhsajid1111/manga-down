@@ -5,7 +5,7 @@ import os
 import time
 import random
 import sys
-import fake_useragent
+from fake_headers import Headers
 import re
 class downloader:
 
@@ -73,7 +73,7 @@ class downloader:
              # loops through all image links, send a response and if response is success,
               #  write that response.content as binary as images'''
             print("Changing user agent...")
-            headers = fake_useragent.get_user_agent()
+            headers = Headers(headers=False).generate()
             print("User Agent changed...")
             
             print(f'{len(img_links)} Pages to download...')
