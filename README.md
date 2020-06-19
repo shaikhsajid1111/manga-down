@@ -8,7 +8,7 @@
 
 
 
-Manga down downloads all mangas available from [kissmanga](http://kissmanga.com), [mangareader](http://mangareader.net) and [mangapanda](http://mangapanda.com)
+Manga down downloads all mangas available from [mangareader](http://mangareader.net) and [mangapanda](http://mangapanda.com)
 
 
 
@@ -27,17 +27,12 @@ Manga down downloads all mangas available from [kissmanga](http://kissmanga.com)
 - To download all chapter of manga (only available for manga_reader and mangapanda)
     - Go to either manga_reader or mangapanda folder and open terminal in same, type ```python image_downloader.py 'manga_name'```
 
-- Kissmanga uses selenium webdriver and it works only with chrome. Install it from [here](https://chromedriver.chromium.org/downloads) 
-**Note: Chrome version and webdriver version must be compatible**
+
 
 ## Tech
 
 - [Requests](https://requests.readthedocs.io/en/master/)
 - [bs4](https://pypi.org/project/beautifulsoup4/)
-- [selenium](https://selenium-python.readthedocs.io/)
-- [chrome webdriver](https://chromedriver.chromium.org)
-
-
 
 ## Demo
 
