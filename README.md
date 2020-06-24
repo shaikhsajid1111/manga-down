@@ -8,7 +8,7 @@
 
 
 
-Manga down downloads all mangas available from [mangareader](http://mangareader.net) and [mangapanda](http://mangapanda.com)
+Manga down downloads all mangas available from [mangareader](http://mangareader.net),[mangapanda](http://mangapanda.com),[mangaduck](http://mangapanda.net) and mangarock
 
 
 
@@ -18,13 +18,13 @@ Manga down downloads all mangas available from [mangareader](http://mangareader.
 
 
 ## Installation
-- Install dependencies from [requirements](requirements.txt)
+1. Install dependencies from [requirements](requirements.txt)
 
-- Go to any folder from manga_reader,magapanda or kissmanga(only works with chrome webdriver)
+1. Go to any folder from project's directory(only works with chrome webdriver)
     - To download chapter of manga:
       - Open terminal in that folder and type ```python image_downloader.py chapter_number 'manga_name'```, Where ```chapter_number``` will be an integer, ```manga_name``` is string(pass under quotation).
 
-- To download all chapter of manga (only available for manga_reader and mangapanda)
+1. To download all chapter of manga (only available for manga_reader and mangapanda)
     - Go to either manga_reader or mangapanda folder and open terminal in same, type ```python image_downloader.py 'manga_name'```
 
 
@@ -33,6 +33,7 @@ Manga down downloads all mangas available from [mangareader](http://mangareader.
 
 - [Requests](https://requests.readthedocs.io/en/master/)
 - [bs4](https://pypi.org/project/beautifulsoup4/)
+- [Selenium](https://selenium-python.readthedocs.io/getting-started.html)
 
 ## Demo
 

@@ -8,13 +8,13 @@ import requests
 import sys
 class image_downloader:
     @staticmethod
-    def download_chapter(anime_name,chp_number):
+    def download_chapter(chp_number:int,anime_name):
         try:
             #anime_name = self.__url_generator(anime_name)
             print(f"Searching for {anime_name}")
             
-            img_links = image_fetcher.image_links(anime_name,chp_number)
-            
+            img_links = image_fetcher.image_links(anime_name,int(chp_number))
+            print(img_links)
             print(f"Succesfully fetched all images on the server...\nCreating Folder {anime_name}...")
             # folder creating process
             # if folder exists
@@ -77,9 +77,6 @@ class image_downloader:
             exit()
         except Exception as ex:
             print(ex)
-if __name__ == '__main__':
-    if len(sys.argv) == 3:
-        
-        image_downloader.download_chapter(sys.argv[len(sys.argv)-2],sys.argv[len(sys.argv)-1])
-        
+
+image_downloader.download_chapter(4,'bleach')   
    

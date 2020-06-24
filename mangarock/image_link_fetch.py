@@ -12,38 +12,47 @@ class image_fetcher:
     @staticmethod
     def image_links(anime_name,chp_number):
         chap_list = chapter_list.scrap(anime_name)
+        #print(chap_list)
         print("Chapters founded")   
         headers = Headers().generate()
 
         chrome_options = Options()
-        chrome_options.add_argument('--headless')
+        #chrome_options.add_argument('--headless')
         chrome_options.add_argument('--disable-extensions')
         chrome_options.add_argument('--incognito')
         chrome_options.add_argument('--disable-gpu')
         chrome_options.add_argument('--log-level=3')
         chrome_options.add_argument(f'user-agent={headers}')
         driver = webdriver.Chrome('C:\\webdrivers\\chromedriver.exe',options=chrome_options)
-        
-        driver.get(chap_list[chp_number]) 
+        url = chap_list[int(chp_number)]
+        print(url)
+        driver.get(url) 
         
         element = WebDriverWait(driver, 10).until(
                     EC.presence_of_element_located((By.ID,'page_image_zoom'))
                 )
         select_box = Select(driver.find_element_by_id('sel_load'))
         select_box.select_by_visible_text('Load images: all images')       
-        print("page is loaded")        
         element = WebDriverWait(driver, 10).until(
                     EC.presence_of_element_located((By.ID,'img-1'))
                 )
+        print("page is loaded")        
+        
         
         response = driver.page_source.encode('utf-8').strip()
         
         soup = BeautifulSoup(response,'html.parser')
-        
-        all_images = soup.find_all('a',{
-            'class' : 'img-num'
+        #print(soup.prettify())
+        #with open('all.html','w',encoding='utf-8') as file:
+        #    file.write(str(soup.prettify()))
+        all_images = soup.find_all('img',{
+            'class' : 'img'
         })
-        image_links = [anchor['href'] for anchor in all_images]
+        #print(all_images)
+        image_links = [anchor['src'] for anchor in all_images]
+        #print(image_links)
         return image_links
 
-#print(image_fetcher.image_links("naruto",4))
+#print(image_fetcher.image_links("bleach",4))
+if __name__ == '__main__':
+    print(image_fetcher.image_links("naruto",10))

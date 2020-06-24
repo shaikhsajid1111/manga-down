@@ -9,7 +9,7 @@ class chapter_list:
         soup = BeautifulSoup(response.content,"html.parser")
         list_duck = soup.find("div",{
             "class" : "mt-3 stream collapsed",
-            "id" : "stream_4"
+            "id" : "stream_6"
         })
         all_anchors = list_duck.findChildren('a',{'class' : 'ml-1 visited ch'})
         chapters = [f'https://mangapark.net{anchor["href"]}' for anchor in all_anchors]
