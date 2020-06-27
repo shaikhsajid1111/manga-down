@@ -9,50 +9,48 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.select import Select
 class image_fetcher:
+
     @staticmethod
     def image_links(anime_name,chp_number):
-        chap_list = chapter_list.scrap(anime_name)
-        #print(chap_list)
+        '''fetch all image links in a chapter'''
+        chap_list = chapter_list.scrap(anime_name)      #fetch all chapters available for manga
+    
         print("Chapters founded")   
         headers = Headers().generate()
-
+        
         chrome_options = Options()
-        #chrome_options.add_argument('--headless')
-        chrome_options.add_argument('--disable-extensions')
-        chrome_options.add_argument('--incognito')
+        chrome_options.add_argument('--headless')   #run browser headlessly
+        chrome_options.add_argument('--disable-extensions')     #disable all extensions
+        chrome_options.add_argument('--incognito')              #runs in incognito mode
         chrome_options.add_argument('--disable-gpu')
-        chrome_options.add_argument('--log-level=3')
-        chrome_options.add_argument(f'user-agent={headers}')
-        driver = webdriver.Chrome('C:\\webdrivers\\chromedriver.exe',options=chrome_options)
-        url = chap_list[int(chp_number)]
-        print(url)
-        driver.get(url) 
+        chrome_options.add_argument('--log-level=3')            #do not show log of process
+        chrome_options.add_argument(f'user-agent={headers}')    #change user agents
+        driver = webdriver.Chrome('C:\\webdrivers\\chromedriver.exe',options=chrome_options)    #initialization
+        url = chap_list[int(chp_number)]            #chapter_list[chapter_number]
+        driver.get(url)             #open URL
         
         element = WebDriverWait(driver, 10).until(
                     EC.presence_of_element_located((By.ID,'page_image_zoom'))
-                )
-        select_box = Select(driver.find_element_by_id('sel_load'))
-        select_box.select_by_visible_text('Load images: all images')       
+                )       #wait until there is element with ID page_image_zoom
+        select_box = Select(driver.find_element_by_id('sel_load'))  #select that select tag
+        select_box.select_by_visible_text('Load images: all images')        #after selection, check option to show all iimages
         element = WebDriverWait(driver, 10).until(
                     EC.presence_of_element_located((By.ID,'img-1'))
-                )
+                )   #wati until at least first image shows up
         print("page is loaded")        
         
         
-        response = driver.page_source.encode('utf-8').strip()
+        response = driver.page_source.encode('utf-8').strip()   #get page Source
         
         soup = BeautifulSoup(response,'html.parser')
-        #print(soup.prettify())
-        #with open('all.html','w',encoding='utf-8') as file:
-        #    file.write(str(soup.prettify()))
+        
         all_images = soup.find_all('img',{
             'class' : 'img'
-        })
-        #print(all_images)
-        image_links = [anchor['src'] for anchor in all_images]
-        #print(image_links)
+        })              #find all image with className 'img'
+    
+        image_links = [img['src'] for img in all_images]    #extract SRC urls from all image tags
+        
         return image_links
 
-#print(image_fetcher.image_links("bleach",4))
 if __name__ == '__main__':
     print(image_fetcher.image_links("naruto",10))

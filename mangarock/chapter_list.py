@@ -5,7 +5,7 @@ from fake_headers import Headers
 class chapter_list:
     @staticmethod
     def scrap(anime_name):
-        response = requests.get(f"https://mangapark.net/manga/{anime_name}")
+        response = requests.get(f"https://mangapark.net/manga/{anime_name}",headers = Headers().generate())
         soup = BeautifulSoup(response.content,"html.parser")
         list_duck = soup.find("div",{
             "class" : "mt-3 stream collapsed",
@@ -15,4 +15,6 @@ class chapter_list:
         chapters = [f'https://mangapark.net{anchor["href"]}' for anchor in all_anchors]
         return chapters
 
-#print(chapter_list.scrap('bleach'))
+        
+if __name__ == '__main__':
+    print(chapter_list.scrap('anime name goes here'))
