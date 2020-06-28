@@ -13,7 +13,7 @@ class chapter_list:
         })
         all_anchors = list_duck.findChildren('a',{'class' : 'ml-1 visited ch'})
         chapters = [f'https://mangapark.net{anchor["href"]}' for anchor in all_anchors]
-        return chapters
+        return chapters[::-1]
 
         
 if __name__ == '__main__':
