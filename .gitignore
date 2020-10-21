@@ -2,6 +2,7 @@
 /structure
 /*/GUI.py
 /*/__*__
-/*.py
 /kissmanga
 /recycles
+/*/__pycache__
+/test.html

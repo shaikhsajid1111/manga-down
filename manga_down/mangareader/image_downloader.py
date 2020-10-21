@@ -30,7 +30,7 @@ class downloader:
         return keyword.lower()
 
 
-    def download_chapter(self):
+    def download_chapter(self,file_location = os.getcwd()):
         '''expected parameters are 
         chapter number-> chapter number for manga(int),
         manga_name -> manga name e.g naruto
@@ -45,6 +45,9 @@ class downloader:
             
             print(f"Succesfully fetched all images on the server...\nCreating Folder {manga_name}...")
             # folder creating process
+            
+            os.chdir(file_location)
+
             # if folder exists
             if os.path.isdir(os.path.join(os.getcwd(), f'{manga_name}')):
                 # changing current directory to folder
@@ -70,7 +73,7 @@ class downloader:
                 os.chdir(os.path.join(os.getcwd(), f'{manga_name}'))
 
             # creating /manga/chapter_number
-                os.mkdir(f'{chp_number}')
+                os.mkdir(f'{self.chp_number}')
 
             # creating chapter folder inside current folder
                 os.chdir(os.path.join(os.getcwd(), f'{self.chp_number}'))
