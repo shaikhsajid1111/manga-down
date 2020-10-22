@@ -36,10 +36,8 @@ class Chapter_reader:
         if response.status_code >= 200 and response.status_code < 300:
             #if successful response 
             soup = BeautifulSoup(response.content,"html.parser")    
-
-            script_tag = soup.find_all("script")[4].get_text()  #find script tag in 4th position and get all content as text
             
-            all_tags = re.findall('"u":".*?"',script_tag)   #using regex find all url present in js code
+            all_tags = re.findall('"u":".*?"',soup.prettify())   #using regex find all url present in js code
             
         
             all_urls = [f"https:"+url.split(":")[2].replace('"','').replace("\\","") for url in all_tags]
