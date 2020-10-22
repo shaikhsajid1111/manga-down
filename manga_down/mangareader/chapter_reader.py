@@ -23,7 +23,7 @@ class Chapter_reader:
         """returns all image links present for manga chapter"""
         chp_list = chapter_list.Chapter_list(self.manga) #Chapter_list(self.manga)
 
-        URLS = chp_list.get_list()             #all chapters
+        URLS = chp_list.get_links()             #all chapters
 
         print("Changing user agent...")      
         headers = Headers(headers=False).generate()        
@@ -36,10 +36,8 @@ class Chapter_reader:
             exit()
         if response.status_code == 200:
             soup = BeautifulSoup(response.content,"html.parser")    
-            
-            script_tag = soup.find_all("script")[1].get_text()
 
-            all_tags = re.findall('"u":".*?"',script_tag)
+            all_tags = re.findall('"u":".*?"',soup.prettify())
             all_image_urls = ["https:"+url.split(":")[1].replace('"','').replace("\\","") for url in all_tags]
             return all_image_urls
             

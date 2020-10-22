@@ -1,8 +1,8 @@
 /__pycache__
-/structure
-/*/GUI.py
-/*/__*__
-/kissmanga
+/manga_down/__pycache__
+/manga_down/*/__pycache__
+/manga_down/mangareader/__pycache__
 /recycles
 /*/__pycache__
 /test.html
+/test.py
