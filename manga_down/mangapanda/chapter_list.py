@@ -21,25 +21,27 @@ class Chapter_list:
 
         user_agent = Headers(os="win").generate() #fake user agent    
         urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning) 
-
+        
+        #send request and store them to response var
         response = requests.get(self.URL,headers = user_agent,verify = False)
 
-        if response.status_code < 500 and response.status_code > 400:
+        if response.status_code < 500 and response.status_code >= 400:
+            #if server error occured
             print("Server error")
             exit()
         
         if response.status_code >= 200 and response.status_code < 300:
             soup = BeautifulSoup(response.content,"html.parser")
-            
+        
             table = soup.find("div",{"id" : "stream_3"})
             
             all_div_tags = table.find_all("div",{"class" : "d-none"})
             
             all_texts = [text.get_text().strip().replace("\n","").strip().replace(":","").strip() for text in all_div_tags]
             
-            all_texts.reverse()
+            all_texts.reverse() #we get list in descending order,so reverse it to make it ascending order
 
-            return ["{} {} : {}".format(self.manga,index,value) for index,value in enumerate(all_texts,start=1)]
+            return [f"{self.manga} {index} : {value}" for index,value in enumerate(all_texts,start=1)]
 
 
     def get_links(self):

@@ -18,6 +18,11 @@ setuptools.setup(
         "Operating System :: OS Independent",
     ],
     python_requires = ">=3.7",
+    install_requires=[
+        'bs4==0.0.1',
+        'requests==2.22.0',
+        'fake-headers==1.0.2'
+    ]
 
 
 )
