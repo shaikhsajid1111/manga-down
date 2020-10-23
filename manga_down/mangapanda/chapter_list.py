@@ -9,9 +9,12 @@ except Exception as ex:
 class Chapter_list:
     def __init__(self,manga):
         self.manga = manga
-        self.URL = f"https://mangapark.net/manga/{self.manga}/"
-    
-    def replace_ending(self,sentence, old, new):
+        self.URL = f"https://mangapark.net/manga/{self.__URLify(self.manga)}/"
+        
+    def __URLify(self,manga):
+        return "-".join(manga.split(" "))
+
+    def __replace_ending(self,sentence, old, new):
         if sentence.endswith(old):
             return sentence[:-len(old)] + new
         return sentence
@@ -35,12 +38,21 @@ class Chapter_list:
         
             table = soup.find("div",{"id" : "stream_3"})
             
+            if table is None:
+                print("Cannot find the manga on MangaPanda")
+                exit()
+            
             all_div_tags = table.find_all("div",{"class" : "d-none"})
             
             all_texts = [text.get_text().strip().replace("\n","").strip().replace(":","").strip() for text in all_div_tags]
             
-            all_texts.reverse() #we get list in descending order,so reverse it to make it ascending order
-
+            #all_texts.reverse() #we get list in descending order,so reverse it to make it ascending order
+            
+            if len(all_texts) == 0:
+                all_anchor_tags = table.find_all("a",{"class" : "visited"})
+                all_texts = [text.get_text() for text in all_anchor_tags]
+            all_texts.reverse()
+            
             return [f"{self.manga} {index} : {value}" for index,value in enumerate(all_texts,start=1)]
 
 
@@ -60,7 +72,7 @@ class Chapter_list:
             
             all_anchor_tags = table.find_all("a",{"class" : "ml-1 visited ch"})
             
-            all_hrefs = [f"https://mangapark.net{self.replace_ending(anchor['href'],'/1','')}" for anchor in all_anchor_tags]
+            all_hrefs = [f"https://mangapark.net{self.__replace_ending(anchor['href'],'/1','')}" for anchor in all_anchor_tags]
 
             return all_hrefs
 

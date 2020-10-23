@@ -13,9 +13,11 @@ class Chapter_list:
         """
         instantiate class with given manga name
         """
-        
         self.manga = manga
-        self.URL = f"http://www.mangareader.net/{self.manga}"
+        self.URL = f"http://www.mangareader.net/{self.__URLify(self.manga)}"
+
+    def __URLify(self,manga):
+        return "-".join(manga.split(" "))
     
     def get_chapter_list(self):
         """

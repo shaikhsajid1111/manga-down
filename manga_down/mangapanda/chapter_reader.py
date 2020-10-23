@@ -13,9 +13,12 @@ except Exception as ex:
 
 class Chapter_reader:
     def __init__(self,manga,chapter_number):
-        self.manga = manga
+        self.manga = self.__URLify(manga)
         self.chapter_number = chapter_number    
-
+    
+    def __URLify(self,manga):
+        return "-".join(manga.split(" "))
+    
     def get_image_links(self):
         """returns a list of image link for a given chapter"""
         #make a request to server and scrap all present chapter for manga
@@ -75,11 +78,15 @@ class Chapter_reader:
 
 
     def __download(self,URL,file_name):
+        """expects image links,downloads them, if download was succesful,return True else False"""
         headers = Headers().generate()
+        
+        image_extension = URL.split(".")[-1]
+        urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning) 
         response = requests.get(URL, stream=True,headers = headers,verify = False)
                 
         if response.status_code == 200:
-            with open(f'{self.manga} - {file_name}.jpg', 'wb') as file:
+            with open(f'{self.manga} - {file_name}.{image_extension}', 'wb') as file:
                 file.write(response.content)    
                 return True
         return False
@@ -106,7 +113,7 @@ class Chapter_reader:
             # loops through all image links, send a response and if response is success,
             # write that response.content as binary as images'''
             urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)         #hiding the warning
-            #chapter_r = chapter_reader.Chapter_reader(manga_name,self.chapter_number)
+            
             img_links = self.get_image_links()
             print(f'{len(img_links)+1} Pages to download...')
             
