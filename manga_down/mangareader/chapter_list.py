@@ -3,7 +3,6 @@ try:
     from bs4 import BeautifulSoup
     from fake_headers import Headers
     import urllib3
-    import argparse
 #if module is not available
 except Exception as ex:
     print(ex)
