@@ -9,9 +9,9 @@ except Exception as ex:
 class Chapter_list:
     def __init__(self,manga):
         self.manga = manga
-        self.URL = f"https://mangapark.net/manga/{self.__URLify(self.manga)}/"
+        self.URL = f"https://mangapark.net/manga/{self.URLify(self.manga)}/"
         
-    def __URLify(self,manga):
+    def URLify(self,manga):
         return "-".join(manga.split(" "))
 
     def __replace_ending(self,sentence, old, new):
