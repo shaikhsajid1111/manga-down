@@ -1,7 +1,7 @@
 try:
     import requests 
     from bs4 import BeautifulSoup
-    from . import chapter_list
+    from .chapter_list import Chapter_list
     from fake_headers import Headers
     import re
     import time
@@ -12,27 +12,23 @@ except Exception as ex:
     print(ex)
     exit()
 
-class Chapter_reader:
+class Chapter_reader(Chapter_list):
     
-    def __init__(self, manga,chapter_number):   #chapter_number and manga_name
+    def __init__(self, manga):   #chapter_number and manga_name
         """
         instantiate chapter_reader class 
         """
-        self.manga = self.__URLify(manga)
-        self.chapter_number = chapter_number
-    
-    def __URLify(self,manga):
-        return "-".join(manga.split(" "))
+        self.manga = self.URLify(manga)
+        self.URL = f"http://www.mangareader.net/{self.URLify(self.manga)}"
 
-    def get_image_links(self):
+    def get_image_links(self,chapter_number):
         """returns all image links present for manga chapter"""
-        chp_list = chapter_list.Chapter_list(self.manga) 
-
-        URLS = chp_list.get_links()             #all chapters
+        
+        URLS = self.get_links()             #all chapters
    
         headers = Headers(headers=False).generate()        
-
-        response = requests.get(URLS[int(self.chapter_number)-1],headers = headers,verify = False)            #chapter number
+        urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning) #disable warning
+        response = requests.get(URLS[int(chapter_number)-1],headers = headers,verify = False)            #chapter number
         
         if response.status_code == 404:
             print("Error Occured!")
@@ -45,21 +41,21 @@ class Chapter_reader:
             return all_image_urls
             
     
-    def __create_folder(self):
+    def create_folder(self,chapter_number):
 
         if os.path.isdir(os.path.join(os.getcwd(), f'{self.manga}')):
                 # changing current directory to folder
                 os.chdir(os.path.join(os.getcwd(), f'{self.manga}'))
             # if chapter folder exists
-                if os.path.isdir(os.path.join(os.getcwd(), f'{self.chapter_number}')):
+                if os.path.isdir(os.path.join(os.getcwd(), f'{chapter_number}')):
                     # just change the CWD to this folder
-                    os.chdir(os.path.join(os.getcwd(), f'{self.chapter_number}'))
+                    os.chdir(os.path.join(os.getcwd(), f'{chapter_number}'))
                     print("Starting download ...")
                 else:
                     # create chapter folder
-                    os.mkdir(f'{self.chapter_number}')
+                    os.mkdir(f'{chapter_number}')
                 # change directory to chapter folder
-                    os.chdir(os.path.join(os.getcwd(), f'{self.chapter_number}'))
+                    os.chdir(os.path.join(os.getcwd(), f'{chapter_number}'))
         else:
 
             # making folder with same manga name
@@ -68,14 +64,14 @@ class Chapter_reader:
             # canging directory to that above created folder
             os.chdir(os.path.join(os.getcwd(), f'{self.manga}'))
             # ceating /manga/chapter_number
-            os.mkdir(f'{self.chapter_number}')
+            os.mkdir(f'{chapter_number}')
             # ceating chapter folder inside current folder
-            os.chdir(os.path.join(os.getcwd(), f'{self.chapter_number}'))
+            os.chdir(os.path.join(os.getcwd(), f'{chapter_number}'))
         return "Starting download ..."
 
 
 
-    def __download(self,URL,file_name):
+    def download(self,URL,file_name):
         """expects image links,downloads them, if download was succesful,return True else False"""
         headers = Headers().generate()
         
@@ -90,7 +86,7 @@ class Chapter_reader:
         return False
     
 
-    def download_chapter(self,file_location = os.getcwd()):
+    def download_chapter(self,chapter_number,file_location = os.getcwd()):
         '''download the chapter'''
         try:
             if not os.path.exists(file_location):
@@ -106,29 +102,29 @@ class Chapter_reader:
             
             os.chdir(file_location)
 
-            self.__create_folder()
+            self.create_folder(chapter_number)
             
             # loops through all image links, send a response and if response is success,
             # write that response.content as binary as images
 
             urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)         #hiding the warning
             
-            img_links = self.get_image_links()
+            img_links = self.get_image_links(chapter_number)
             print(f'{len(img_links)+1} Pages to download...')
             
             for i in range(len(img_links)):
-                download_result = self.__download(img_links[i],f"{self.manga} - Page {i+1}")
+                download_result = self.download(img_links[i],f"{self.manga} - Page {i+1}")
                 if download_result:
-                        print(f"{self.manga} - Chapter : {self.chapter_number} Page :{i+1} downloaded...")
+                        print(f"{self.manga} - Chapter : {chapter_number} Page :{i+1} downloaded...")
                         print(f'Remaining {len(img_links)-i}')    
                         time.sleep(random.randint(5, 10))
                 else:
                     print(f"Could not able to download {i+1} page")
 
-            return f"Successfully downloaded {self.manga} - {self.chapter_number}\nEnjoy the manga!:)\nBye"
+            return f"Successfully downloaded {self.manga} - {chapter_number}\nEnjoy the manga!:)\nBye"
         
         except IndexError:
-            print(f"{self.chapter_number} does not exist!")
+            print(f"{chapter_number} does not exist!")
         except KeyboardInterrupt:
             print("Bye")
             exit()
