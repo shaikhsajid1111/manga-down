@@ -18,11 +18,29 @@ pip3 install manga_down
 #### To view all chapters available for manga
 
 ```python
-import manga_down
+from manga_down import mangareader
 
-naruto = manga_down.mangareader.Chapter_list("naruto")   #initialize Chapter_list class with manga name
+naruto = mangareader.Manga("naruto")   #initialize Chapter_list class with manga name
 print(naruto.get_chapter_list())        #prints out all chapter list of naruto manga
 ```
+
+Found the chapter that you wanted to download?.
+Here's how to download that chapter
+
+```python
+from manga_down import mangareader #import mangareader from manga_down
+
+naruto = mangareader.Manga("naruto")    #initialize the class
+naruto.download_chapter("120")  #just call the download_chapter by passing chapter number as argument
+
+## wanted to download the chapter in another folder?
+#try below code
+file_location = "/usr/Downloads"
+naruto.download_chapter("120", file_location)#this will download the chapter on another folder passed as parameter 
+
+```
+
+
 #### To download a chapter of manga
 ```python
 import manga_down

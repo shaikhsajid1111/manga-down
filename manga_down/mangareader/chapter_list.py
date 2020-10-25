@@ -29,18 +29,18 @@ class Chapter_list:
         
         response = requests.get(self.URL,headers = ua.generate(),verify = False)           #sending a request and storing the response inside response var
         
-        if response.status_code == 404:     #if page does not exist
-            print("Page not found!")
+        if response.status_code >= 400 and response.status_code < 500:     #server error
+            print("Server Error!\nTry again later")
         if response.status_code == 200:
             soup = BeautifulSoup(response.content,"html.parser")
     
             table = soup.find('table',{'class' : 'd48'})       #find all chapter table
             
-            all_rows = table.find_all("tr")                  
+            all_rows = table.find_all("tr")  #find all row in table                
             
-            all_tables_data = [tr.find("td") for tr in all_rows]
+            all_tables_data = [tr.find("td") for tr in all_rows]    #loop through all row and find td tag inside
 
-            all_chapters = [data.get_text() for data in all_tables_data]
+            all_chapters = [data.get_text() for data in all_tables_data]    #loop through all td and store there text inside the list
             return all_chapters[1:]
             
 
@@ -48,7 +48,7 @@ class Chapter_list:
 
     def get_links(self):
         """
-        returns list of all chapter's link from http://mangareader.com/
+        returns list of all chapter's link from https://mangareader.com/
         """
         ua = Headers(headers = False) #change headers
         
@@ -56,15 +56,15 @@ class Chapter_list:
         
         response = requests.get(self.URL,headers = ua.generate(),verify = False)           #sending a request and storing the response inside response var
         
-        if response.status_code == 404:     #if page does not exist
-            print("Page not found!")
-        if response.status_code == 200:
+        if response.status_code >= 400 and response.status_code < 500:     #if server error
+            print("Server Error\nTry again later")
+        if response.status_code >= 200 and response.status_code < 300:
             soup = BeautifulSoup(response.content,"html.parser")
     
-            table = soup.find('table',{'class' : 'd48'})       #find all chapter table
+            table = soup.find('table',{'class' : 'd48'})       #find table containing all chapter
             anchors = table.find_all("a")                   #all hyperlinks in table i.e all links for chapters available
     
-            links = [f"https://www.mangareader.net{a['href']}" for a in anchors]
+            links = [f"https://www.mangareader.net{a['href']}" for a in anchors] #get href attribute of all anchor tags and store them in lists
             return links   
 
 

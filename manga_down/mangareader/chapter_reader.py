@@ -12,9 +12,13 @@ except Exception as ex:
     print(ex)
     exit()
 
-class Chapter_reader(Chapter_list):
-    
-    def __init__(self, manga):   #chapter_number and manga_name
+class Chapter_reader(Chapter_list):  
+    '''
+    base class is Chapter_list, so,
+    - URLify() method is inherited from Chapter_list
+    - get_links() method is inherited as well
+    '''
+    def __init__(self, manga):   #constructor needs manga by default
         """
         instantiate chapter_reader class 
         """
@@ -24,50 +28,65 @@ class Chapter_reader(Chapter_list):
     def get_image_links(self,chapter_number):
         """returns all image links present for manga chapter"""
         
-        URLS = self.get_links()             #all chapters
+        URLS = self.get_links()             #all chapters, method from Chapter_list class(base class)
    
         headers = Headers(headers=False).generate()        
+        
         urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning) #disable warning
+        
         response = requests.get(URLS[int(chapter_number)-1],headers = headers,verify = False)            #chapter number
         
-        if response.status_code == 404:
-            print("Error Occured!")
+        if response.status_code < 500 and response.status_code >= 400:   #if server error 
+            print("Server Error!\nTry Again later")
             exit()
-        if response.status_code == 200:
-            soup = BeautifulSoup(response.content,"html.parser")    
 
+        if response.status_code >= 200 and response.status_code < 300:
+            #if response is success
+
+            soup = BeautifulSoup(response.content,"html.parser") #make bs4 object with response's content and parser is html.parser   
+
+            #webpage has URL of all images as "u":"image_links" in <script> tag,so using regex
+            # we find all those, soup.prettify() returns code of webpage as string
             all_tags = re.findall('"u":".*?"',soup.prettify())
+            
+            #using list comprehension,iterate over regex results and just split "u":"image_link" by ':' and than we'll
+            # get list like ["u","image_link"], we need URL, so take element at index 1. concatenate that
+            # item with "https://" and even remove " 
             all_image_urls = ["https:"+url.split(":")[1].replace('"','').replace("\\","") for url in all_tags]
+            
             return all_image_urls
             
     
     def create_folder(self,chapter_number):
-
+        #if folder with name of given manga exists already
         if os.path.isdir(os.path.join(os.getcwd(), f'{self.manga}')):
-                # changing current directory to folder
+                # changing current directory to given manga name folder
                 os.chdir(os.path.join(os.getcwd(), f'{self.manga}'))
-            # if chapter folder exists
+                
+                # if folder with name as given chapter also exists in the folder
                 if os.path.isdir(os.path.join(os.getcwd(), f'{chapter_number}')):
-                    # just change the CWD to this folder
+                    # just set the current working directory to this one, and exit function
                     os.chdir(os.path.join(os.getcwd(), f'{chapter_number}'))
-                    print("Starting download ...")
+                    
+                    return "Starting download ..."   #exit
                 else:
-                    # create chapter folder
+                    # create the chapter folder with given manga name
                     os.mkdir(f'{chapter_number}')
-                # change directory to chapter folder
+                    # change current working directory to newly created folder
                     os.chdir(os.path.join(os.getcwd(), f'{chapter_number}'))
+                    return "Starting download ..."
+        #if folder with name of given manga does not exist
         else:
 
             # making folder with same manga name
             os.mkdir(f'{self.manga}')
-            print(f"Folder created {self.manga}")
-            # canging directory to that above created folder
+            # changing directory to that above created folder
             os.chdir(os.path.join(os.getcwd(), f'{self.manga}'))
-            # ceating /manga/chapter_number
+            # ceating /manga/chapter_number folder
             os.mkdir(f'{chapter_number}')
             # ceating chapter folder inside current folder
             os.chdir(os.path.join(os.getcwd(), f'{chapter_number}'))
-        return "Starting download ..."
+            return "Starting download ..."
 
 
 
@@ -89,6 +108,7 @@ class Chapter_reader(Chapter_list):
     def download_chapter(self,chapter_number,file_location = os.getcwd()):
         '''download the chapter'''
         try:
+            #if given directory is invalid than download in current directory
             if not os.path.exists(file_location):
                 file_location = os.getcwd()
 
@@ -102,7 +122,7 @@ class Chapter_reader(Chapter_list):
             
             os.chdir(file_location)
 
-            self.create_folder(chapter_number)
+            self.create_folder(chapter_number) #change directory to where image has to been downloaded
             
             # loops through all image links, send a response and if response is success,
             # write that response.content as binary as images
@@ -110,6 +130,7 @@ class Chapter_reader(Chapter_list):
             urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)         #hiding the warning
             
             img_links = self.get_image_links(chapter_number)
+            
             print(f'{len(img_links)+1} Pages to download...')
             
             for i in range(len(img_links)):

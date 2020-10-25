@@ -47,31 +47,35 @@ class Chapter_reader(Chapter_list):
             return all_urls      
     
     def create_folder(self,chapter_number):
-
+        #if folder with name of given manga exists already
         if os.path.isdir(os.path.join(os.getcwd(), f'{self.manga}')):
-                # changing current directory to folder
+                # changing current directory to given manga name folder
                 os.chdir(os.path.join(os.getcwd(), f'{self.manga}'))
-            # if chapter folder exists
+                
+                # if folder with name as given chapter also exists in the folder
                 if os.path.isdir(os.path.join(os.getcwd(), f'{chapter_number}')):
-                    # just change the CWD to this folder
+                    # just set the current working directory to this one, and exit function
                     os.chdir(os.path.join(os.getcwd(), f'{chapter_number}'))
-                    print("Starting download ...")
+                    
+                    return "Starting download ..."   #exit
                 else:
-                    # create chapter folder
+                    # create the chapter folder with given manga name
                     os.mkdir(f'{chapter_number}')
-                # change directory to chapter folder
+                    # change current working directory to newly created folder
                     os.chdir(os.path.join(os.getcwd(), f'{chapter_number}'))
+                    return "Starting download ..."
+        #if folder with name of given manga does not exist
         else:
-                # making folder with same manga name
+
+            # making folder with same manga name
             os.mkdir(f'{self.manga}')
-            print(f"Folder created {self.manga}")
-            # canging directory to that above created folder
+            # changing directory to that above created folder
             os.chdir(os.path.join(os.getcwd(), f'{self.manga}'))
-            # ceating /manga/chapter_number
+            # ceating /manga/chapter_number folder
             os.mkdir(f'{chapter_number}')
             # ceating chapter folder inside current folder
             os.chdir(os.path.join(os.getcwd(), f'{chapter_number}'))
-        return "Starting download ..."
+            return "Starting download ..."
 
 
 

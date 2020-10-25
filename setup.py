@@ -3,11 +3,11 @@ with open("README.md","r") as file:
     long_description = file.read()
 
 setuptools.setup(
-    name = "manga-down-shaikhsajid1111",
+    name = "manga_down-shaikhsajid1111",
     version = "1.0",
     author = "Shaikh Sajid",
     author_email = "shaikhsajid3732@gmail.com",
-    description = "Python package to download manga",
+    description = "Python package to download manga available on mangareader and mangapanda",
     long_description_content_type = "text/markdown",
     url = "https://github.com/shaikhsajid1111/manga-down/",
     keywords = "web-scraping manga-down manga-download download manga-downloader requests bs4 beautifulsoup mangreader mangapanda",
@@ -24,7 +24,7 @@ setuptools.setup(
         "Topic :: Web :: web scraping",
 
     ],
-    python_requires = ">=3.7",
+    python_requires = ">=3.6.9",
     install_requires=[
         'bs4==0.0.1',
         'requests==2.22.0',
