@@ -9,7 +9,7 @@ manga_down is a tool to download manga from [Mangareader](https://www.mangareade
 ## Installation
 
 ```
-pip3 install manga_down
+pip3 install manga-down
 ```
 
 ## How to use?

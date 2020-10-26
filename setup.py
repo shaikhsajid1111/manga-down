@@ -1,4 +1,5 @@
 import setuptools
+
 with open("README.md","r") as file:
     long_description = file.read()
 
@@ -8,6 +9,7 @@ setuptools.setup(
     author = "Shaikh Sajid",
     author_email = "shaikhsajid3732@gmail.com",
     description = "Python package to download manga available on mangareader and mangapanda",
+    long_description = long_description,
     long_description_content_type = "text/markdown",
     url = "https://github.com/shaikhsajid1111/manga-down/",
     keywords = "web-scraping manga-down manga-download download manga-downloader requests bs4 beautifulsoup mangreader mangapanda",
