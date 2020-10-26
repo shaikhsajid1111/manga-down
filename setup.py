@@ -3,7 +3,7 @@ with open("README.md","r") as file:
     long_description = file.read()
 
 setuptools.setup(
-    name = "manga_down-shaikhsajid1111",
+    name = "manga_down",
     version = "1.0",
     author = "Shaikh Sajid",
     author_email = "shaikhsajid3732@gmail.com",
