@@ -1,6 +1,6 @@
 # manga_down
 -----------------
-manga_down is command line tool to download manga from [Mangareader](https://www.mangareader.net) and [Mangapanda](https://http://www.mangapanda.com) 
+manga_down is a tool to download manga from [Mangareader](https://www.mangareader.net) and [Mangapanda](https://http://www.mangapanda.com) 
 
 [![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://travis-ci.org/joemccann/dillinger) 
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/Naereen/StrapDown.js/graphs/commit-activity)
