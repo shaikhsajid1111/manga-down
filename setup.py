@@ -21,7 +21,7 @@ setuptools.setup(
         "Operating System :: Microsoft :: Windows",
         "Operating System :: POSIX :: Linux",
         "Operating System :: MacOS :: MacOS X", 
-        "Topic :: Web :: web scraping",
+       
 
     ],
     python_requires = ">=3.6.9",
