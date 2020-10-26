@@ -12,6 +12,7 @@ class Chapter_list:
         self.URL = f"https://mangapark.net/manga/{self.URLify(self.manga)}/"
         
     def URLify(self,manga):
+        """replaces space with '-' """
         return "-".join(manga.split(" "))
 
     def __replace_ending(self,sentence, old, new):
@@ -35,22 +36,25 @@ class Chapter_list:
         
         if response.status_code >= 200 and response.status_code < 300:
             soup = BeautifulSoup(response.content,"html.parser")
-        
+            
+            #find table tag with id named as "stream_3"
             table = soup.find("div",{"id" : "stream_3"})
             
             if table is None:
                 print("Cannot find the manga on MangaPanda")
                 exit()
-            
+            #find div with class name "d-none" inside table tag
             all_div_tags = table.find_all("div",{"class" : "d-none"})
-            
+
+            #extract text between those div tags,replace \n escape character,":" and spaces as well
             all_texts = [text.get_text().strip().replace("\n","").strip().replace(":","").strip() for text in all_div_tags]
-            
-            #all_texts.reverse() #we get list in descending order,so reverse it to make it ascending order
-            
+            #if div tags inside table was not found
             if len(all_texts) == 0:
+                #find all anchor tag
                 all_anchor_tags = table.find_all("a",{"class" : "visited"})
-                all_texts = [text.get_text() for text in all_anchor_tags]
+                all_texts = [text.get_text() for text in all_anchor_tags]   #extract text between anchor tags
+
+            #we get list in descending order,so reverse it to make it ascending order
             all_texts.reverse()
             
             return [f"{self.manga} {index} : {value}" for index,value in enumerate(all_texts,start=1)]
@@ -66,12 +70,13 @@ class Chapter_list:
             exit()
         
         if response.status_code >= 200 and response.status_code < 300:
-            soup = BeautifulSoup(response.content,"lxml")
-            
+            soup = BeautifulSoup(response.content,"html.parser")
+
+            #find table that contains all chapters 
             table = soup.find("div",{"id" : "stream_3"})
-            
+            #all anchor tags inside tables
             all_anchor_tags = table.find_all("a",{"class" : "ml-1 visited ch"})
-            
+            #extract all href values from anchor tags
             all_hrefs = [f"https://mangapark.net{self.__replace_ending(anchor['href'],'/1','')}" for anchor in all_anchor_tags]
 
             return all_hrefs
