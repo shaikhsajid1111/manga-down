@@ -5,7 +5,7 @@ with open("README.md","r") as file:
 
 setuptools.setup(
     name = "manga_down",
-    version = "1.0",
+    version = "0.1.0",
     author = "Shaikh Sajid",
     author_email = "shaikhsajid3732@gmail.com",
     description = "Python package to download manga available on mangareader and mangapanda",
