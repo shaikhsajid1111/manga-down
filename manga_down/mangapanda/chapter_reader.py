@@ -83,7 +83,7 @@ class Chapter_reader(Chapter_list):
         """expects image links,downloads them, if download was succesful,return True else False"""
         headers = Headers().generate()
         
-        image_extension = URL.split(".")[-1]
+        image_extension = URL.split("?")[0].split(".")[-1]
         urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning) 
         response = requests.get(URL, stream=True,headers = headers,verify = False)
                 
