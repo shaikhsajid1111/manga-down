@@ -23,7 +23,7 @@ class Chapter_reader(Chapter_list):
         instantiate chapter_reader class 
         """
         self.manga = self.URLify(manga)
-        self.URL = f"http://www.mangareader.net/{self.URLify(self.manga)}"
+        self.URL = f"http://mangareader.cc/manga/{self.URLify(self.manga)}"
 
     def get_image_links(self,chapter_number):
         """returns all image links present for manga chapter"""
@@ -34,7 +34,7 @@ class Chapter_reader(Chapter_list):
         
         urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning) #disable warning
         
-        response = requests.get(URLS[int(chapter_number)-1],headers = headers,verify = False)            #chapter number
+        response = requests.get(URLS[int(chapter_number)],headers = headers,verify = False)            #chapter number
         
         if response.status_code < 500 and response.status_code >= 400:   #if server error 
             print("Server Error!\nTry Again later")
@@ -44,17 +44,12 @@ class Chapter_reader(Chapter_list):
             #if response is success
 
             soup = BeautifulSoup(response.content,"html.parser") #make bs4 object with response's content and parser is html.parser   
+            
+            paragraph = soup.find("p",{"id":"arraydata"})
 
-            #webpage has URL of all images as "u":"image_links" in <script> tag,so using regex
-            # we find all those, soup.prettify() returns code of webpage as string
-            all_tags = re.findall('"u":".*?"',soup.prettify())
-            
-            #using list comprehension,iterate over regex results and just split "u":"image_link" by ':' and than we'll
-            # get list like ["u","image_link"], we need URL, so take element at index 1. concatenate that
-            # item with "https://" and even remove " 
-            all_image_urls = ["https:"+url.split(":")[1].replace('"','').replace("\\","") for url in all_tags]
-            
-            return all_image_urls
+            all_image_hrefs = paragraph.text.split(',')
+
+            return all_image_hrefs
             
     
     def create_folder(self,chapter_number):
