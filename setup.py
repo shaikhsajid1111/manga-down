@@ -5,7 +5,7 @@ with open("README.md","r") as file:
 
 setuptools.setup(
     name = "manga_down",
-    version = "0.1.1",
+    version = "0.1.2",
     author = "Shaikh Sajid",
     author_email = "shaikhsajid3732@gmail.com",
     description = "Python package to download manga available on mangareader and mangapanda",
@@ -15,15 +15,23 @@ setuptools.setup(
     keywords = "web-scraping manga-down manga-download download manga-downloader requests bs4 beautifulsoup mangreader mangapanda",
     packages = setuptools.find_packages(),
     classifiers = [
-        "Development Status :: 4 - Beta",
+        "Development Status :: 5 - Production/Stable",
         "Environment :: Console",
         "Intended Audience :: Developers",
+        "Natural Language :: English",
         "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: Implementation :: CPython",
         "License :: OSI Approved :: MIT License",
         "Operating System :: Microsoft :: Windows",
         "Operating System :: POSIX :: Linux",
         "Operating System :: MacOS :: MacOS X", 
-       
+        "Topic :: Software Development :: Libraries :: Python Modules",
+        "Topic :: Internet :: WWW/HTTP"
+        
 
     ],
     python_requires = ">=3.6.9",
