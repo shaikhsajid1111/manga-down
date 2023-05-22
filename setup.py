@@ -37,6 +37,6 @@ setuptools.setup(
     python_requires = ">=3.6.9",
     install_requires=[
         'bs4==0.0.1',
-        'requests==2.22.0',
+        'requests==2.31.0',
         'fake-headers==1.0.2'
     ])
